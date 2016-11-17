@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="MyWebApp" version="2.5">
-	<display-name>xxx</display-name>
+	<display-name>g20_thread_ftp</display-name>
 	
 	<!-- spring -->
 	<context-param>
@@ -26,7 +26,7 @@
 	
 	<!-- springMVC -->
 	<servlet>
-		<servlet-name>xxx</servlet-name>
+		<servlet-name>g20_thread_ftp</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -35,7 +35,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>xxx</servlet-name>
+		<servlet-name>g20_thread_ftp</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
