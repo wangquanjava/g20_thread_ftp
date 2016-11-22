@@ -3,6 +3,7 @@ package com.git.utils;
 import java.io.InputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 public class FtpUtil {
 	private static final String ip = "127.0.0.1";
@@ -23,11 +24,34 @@ public class FtpUtil {
 			
 			//切换到上传目录
 			ftpClient.changeWorkingDirectory(path);
+			
 			//开始上传，使用临时文件名
 			ftpClient.storeFile(filename+".tmp", inputStream);
 			//上传完，修改文件名
 			ftpClient.rename(filename+".tmp", filename);
 			
+			//退出登陆，断开连接
+			ftpClient.logout();
+			ftpClient.disconnect();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 用于出现了异常，删除这个临时文件
+	 * @param path
+	 * @param filename
+	 * @return
+	 */
+	public boolean deleteTmp(String path,String filename){
+		try {
+			//切换到上传目录
+			FTPClient ftpClient = this.getFtpClient();
+			ftpClient.changeWorkingDirectory(path);
+			
+			ftpClient.deleteFile(filename+".tmp");
 			//退出登陆，断开连接
 			ftpClient.logout();
 			ftpClient.disconnect();

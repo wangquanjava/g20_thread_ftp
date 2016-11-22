@@ -1,6 +1,6 @@
 package com.git.mapper;
 
-import com.git.domain.DemoEntity;
+import com.git.domain.FtpEntity;
 import com.github.abel533.mapper.Mapper;
 
 /**
@@ -9,6 +9,6 @@ import com.github.abel533.mapper.Mapper;
  * @author wangquan
  *
  */
-public interface DemoMapper extends Mapper<DemoEntity>{
+public interface FtpMapper extends Mapper<FtpEntity>{
 
 }
