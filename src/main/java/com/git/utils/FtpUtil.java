@@ -20,8 +20,15 @@ public class FtpUtil {
 	public boolean upload(String path,String filename,InputStream inputStream){
 		try {
 			FTPClient ftpClient = getFtpClient();
+			
+			//切换到上传目录
 			ftpClient.changeWorkingDirectory(path);
-			ftpClient.storeFile(filename, inputStream);
+			//开始上传，使用临时文件名
+			ftpClient.storeFile(filename+".tmp", inputStream);
+			//上传完，修改文件名
+			ftpClient.rename(filename+".tmp", filename);
+			
+			//退出登陆，断开连接
 			ftpClient.logout();
 			ftpClient.disconnect();
 			return true;
@@ -37,14 +44,19 @@ public class FtpUtil {
 	 */
 	private FTPClient getFtpClient() throws Exception{
 		FTPClient ftpClient = new FTPClient();
-		ftpClient.connect(ip, port);
+		//不让服务器校验客户端ip
+		ftpClient.setRemoteVerificationEnabled(false);
 		
+		//连接登录
+		ftpClient.connect(ip, port);
 		ftpClient.login(username, password);
 		
+		//激活被动模式
 		ftpClient.enterLocalPassiveMode();
 		
+		//设置文件格式、编码
 		ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-		ftpClient.setControlEncoding("UTF-8");
+		ftpClient.setControlEncoding("utf-8");
 		return ftpClient;
 	}
     
