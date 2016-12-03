@@ -31,9 +31,10 @@ public class FtpController {
 	}
 	
 	@RequestMapping("destroy")
+	//模拟关机，销毁线程。可以放到listener中的destroy中
 	public ResponseEntity<AjaxJson> destroy(){
-//		销毁线程
 		this.ftpTaskService.destroyFTPUtils();
+		
 		return ResponseEntity.status(200).body(new AjaxJson(true,"成功",null));
 	}
 	

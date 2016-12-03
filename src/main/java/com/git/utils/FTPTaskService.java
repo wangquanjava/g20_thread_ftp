@@ -19,10 +19,10 @@ public class FTPTaskService{
 	@Autowired
 	private FtpService ftpService;
 	
-	public boolean put(String id){
+	public boolean put(String taskId){
 		try {
-			executorServicePool.execute(new FTPThread(id));
-			System.out.println("提交了"+id+"号任务");
+			executorServicePool.execute(new FTPThread(taskId));
+			System.out.println("提交了"+taskId+"号任务");
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -50,14 +50,14 @@ public class FTPTaskService{
 		for (Runnable runnable : notDoList) {
 			ftpThread = (FTPThread) runnable;
 			
-			this.ftpService.add(new FtpEntity(ftpThread.getId()));
-			System.out.println(ftpThread.getId()+"没有执行");
+			this.ftpService.add(new FtpEntity(ftpThread.getTaskId()));
+			System.out.println(ftpThread.getTaskId()+"没有执行");
 		}
 		//这里收集强制被中断的
 		for (Runnable runnable : cancelList) {
 			ftpThread = (FTPThread) runnable;
-			this.ftpService.add(new FtpEntity(ftpThread.getId()));
-			System.out.println(ftpThread.getId()+"强制被中断");
+			this.ftpService.add(new FtpEntity(ftpThread.getTaskId()));
+			System.out.println(ftpThread.getTaskId()+"强制被中断");
 		}
 	}
 }

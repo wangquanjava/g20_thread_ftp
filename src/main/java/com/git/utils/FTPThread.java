@@ -4,18 +4,17 @@ import java.io.FileInputStream;
 
 public class FTPThread implements Runnable {
 	
-	private String id;
-	public String getId() {
-		return id;
+	private String taskId;
+	
+	public String getTaskId() {
+		return taskId;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
 	}
-
-	public FTPThread(String id) {
+	public FTPThread(String taskId) {
 		super();
-		this.id = id;
+		this.taskId = taskId;
 	}
 
 	@Override
@@ -23,23 +22,21 @@ public class FTPThread implements Runnable {
 		//进行查询和发送文件
 		try {
 			//执行上传任务
-			boolean upload = new FtpUtil().upload("/", id+".png", new FileInputStream("C:\\Users\\tdp\\Desktop\\download_all.png"));
+			boolean upload = new FtpUtil().upload("/", taskId+".png", new FileInputStream("C:\\Users\\tdp\\Desktop\\download_all.png"));
 			if (!upload) {
 				throw new Exception();
 			}
 			
 			Thread.sleep(3000);
-			System.out.println(id+"执行结束");
+			System.out.println(taskId+"执行结束");
 		} catch (Exception e) {
 			if (FTPTaskService.executorServicePool.isShutdown()) {
 				//如果是因为线程池.showdownNow()导致，就写入list
 				FTPTaskService.cancelList.add(this);
 			}else{
 				//如果执行错误，就直接输出
-				System.out.println(id+"出现异常");
+				System.out.println(taskId+"出现异常");
 			}
-			//删除临时文件
-			new FtpUtil().deleteTmp("/", id+".png");
 		}
 	}
 }
