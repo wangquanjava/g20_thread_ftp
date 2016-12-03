@@ -22,7 +22,7 @@ public class FTPTaskService{
 	public boolean put(String id){
 		try {
 			executorServicePool.execute(new FTPThread(id));
-			System.out.println("提交了"+id+"车");
+			System.out.println("提交了"+id+"号任务");
 			return true;
 		} catch (Exception e) {
 			return false;
